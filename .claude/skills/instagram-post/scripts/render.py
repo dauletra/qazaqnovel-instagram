@@ -30,6 +30,7 @@ RUBRICS = {
     "zhanalyq": "Жаңалық",
     "baiqau": "Байқау",
     "sen-ne-deisin": "Сен не дейсің?",
+    "biz-turaly": "Біз туралы",
 }
 
 LAYOUTS = {

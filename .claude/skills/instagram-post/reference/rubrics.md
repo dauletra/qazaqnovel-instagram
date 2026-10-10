@@ -18,6 +18,7 @@
 | `zhanalyq` | Жаңалық | `feature` → `text` × 1–3 → `cta` | `examples/zhanalyq.yaml` |
 | `baiqau` | Байқау | `contest` (1 или несколько) | `examples/baiqau.yaml` |
 | `sen-ne-deisin` | Сен не дейсің? | `story_question`, `story_post` | `examples/stories.yaml` |
+| `biz-turaly` | Біз туралы | `cover` → `text` × 2–4 → `cta`; манифест и закреплённые посты о платформе | — |
 
 Обложка Reels — `reels_cover` с рубрикой ролика (`examples/reels-cover.yaml`).
 
@@ -36,7 +37,7 @@
 | `continue` | Терең | `work`, `author`, `genre?`, `cover?` (картинка 2:3), `heading?`, `button?` | work ≤ 30 |
 | `book` | Терең | `work`, `author`, `meta?`, `cover?` | work ≤ 30 |
 | `author_cover` | Қағаз | `quote` (без кавычек), `name`, `about?`, `photo?` (квадрат) | quote ≤ 60 |
-| `quote` | Бирюза; `variant: teren` — Терең | `text` (без кавычек), `author`, `source?` | text ≤ 150 |
+| `quote` | Бирюза; `variant: teren` — Терең (выбирать по соседям в сетке) | `text` (без кавычек), `author`, `source?` | text ≤ 150 |
 | `feature` | Қағаз + телефон | `title`, `subtitle?`, `screenshot?` (скриншот телефона) | title ≤ 30 |
 | `contest` | Лайм | `title`, `rows?` (список `{label, value}`, ≤ 3), `body?`, `button?` | title ≤ 30 |
 | `story_question` | Бирюза, сторис | `question`, `label?` | question ≤ 60; ниже — место под стикер опроса |
