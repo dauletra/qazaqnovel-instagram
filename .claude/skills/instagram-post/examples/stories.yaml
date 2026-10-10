@@ -1,0 +1,8 @@
+# Сторис (1080×1920): story_question — вопрос, ниже место под стикер опроса;
+# story_post — анонс нового поста (image — 01.png того поста).
+rubric: sen-ne-deisin
+slides:
+  - layout: story_question
+    question: Сен қай жанрды көбірек оқисың?
+  - layout: story_post
+    # image: ../13-alghashqy-abzac/01.png

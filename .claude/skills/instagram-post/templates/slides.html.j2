@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: Montserrat; src: url("{{ fonts }}/montserrat-variable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: Montserrat; src: url("{{ fonts }}/montserrat-italic-variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: "Open Sans"; src: url("{{ fonts }}/open-sans-variable.woff2") format("woff2"); font-weight: 300 800; }
+@font-face { font-family: "Open Sans"; src: url("{{ fonts }}/open-sans-italic-variable.woff2") format("woff2"); font-weight: 300 800; font-style: italic; }
+
+/* Палитра — reference/design-system.md §1. Других цветов нет. */
+:root {
+  --birjuza: #036672; --teren: #082F38; --ashyq: #56BECB; --qagaz: #F6F1E7;
+  --sia: #111928; --sur: #4B5563; --laim: #E3FF86; --qyzyl: #9E2222;
+  --m: 88px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #888; font-family: "Open Sans", sans-serif; color: var(--sia); }
+.f { position: relative; overflow: hidden; width: 1080px; height: 1350px; margin: 0 0 20px; }
+.f.story { height: 1920px; }
+img { display: block; }
+
+/* Стили текста */
+.t-title   { font: 800 96px/1.05 Montserrat; letter-spacing: -0.01em; }
+.t-heading { font: 700 60px/1.15 Montserrat; }
+.t-label   { font: 600 28px/1 Montserrat; letter-spacing: 0.08em; text-transform: uppercase; }
+.t-body    { font: 400 40px/1.45 "Open Sans"; }
+.t-excerpt { font: 400 38px/1.6 "Open Sans"; }
+.t-quote   { font: italic 500 58px/1.3 "Open Sans"; }
+.t-caption { font: 600 30px/1.3 "Open Sans"; }
+.t-body p + p { margin-top: 24px; }
+
+/* Компоненты */
+.flow { position: absolute; left: var(--m); right: var(--m); }
+.plate { position: absolute; left: var(--m); top: 96px; padding: 16px 26px; border-radius: 999px; white-space: nowrap; }
+.plate.line { padding: 13px 23px; border: 3px solid currentColor; }
+.story .plate { top: 260px; left: 72px; }
+.counter { position: absolute; right: var(--m); top: 108px; font: 600 28px/1 "Open Sans"; }
+.lockup { position: absolute; left: var(--m); bottom: 88px; display: flex; align-items: center; gap: 18px; font: 700 30px/1 Montserrat; }
+.lockup svg { width: 64px; height: 64px; }
+.mark-sm { position: absolute; right: var(--m); bottom: 88px; width: 56px; height: 56px; }
+.swipe { position: absolute; right: var(--m); bottom: 80px; width: 80px; height: 80px; border-radius: 50%; display: grid; place-items: center; }
+.swipe svg { width: 40px; height: 40px; }
+.ornament { position: absolute; width: 980px; height: 980px; right: -260px; bottom: -220px; opacity: .09; }
+.ornament svg, .mark-sm svg { width: 100%; height: 100%; }
+.pill { display: inline-block; padding: 24px 44px; border-radius: 999px; font: 700 36px/1 Montserrat; }
+.rule { width: 120px; height: 6px; }
+.ph { display: grid; place-items: center; font: 600 30px/1 "Open Sans"; color: rgba(255,255,255,.7);
+  background: linear-gradient(160deg, #0b7c8a, #082F38); }
+.book { border-radius: 12px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+.book img, .photo img, .screen img { width: 100%; height: 100%; object-fit: cover; }
+
+.bg-birjuza { background: var(--birjuza); color: #fff; }
+.bg-teren   { background: var(--teren); color: #fff; }
+.bg-qagaz   { background: var(--qagaz); color: var(--sia); }
+.bg-laim    { background: var(--laim); color: var(--teren); }
+</style>
+</head>
+<body>
+
+{# ── Общие части ── #}
+{% macro lockup(color) %}<div class="lockup" style="color:{{ color }}">{{ mark|safe }}Qazaqnovel.kz</div>{% endmacro %}
+{% macro mark_sm(color) %}<div class="mark-sm" style="color:{{ color }}">{{ mark|safe }}</div>{% endmacro %}
+{% macro ornament(color, extra="") %}<div class="ornament" style="color:{{ color }};{{ extra }}">{{ mark|safe }}</div>{% endmacro %}
+{% macro swipe(s, bg, fg) %}{% if s.n < s.total %}<div class="swipe" style="background:{{ bg }};color:{{ fg }}">{{ icon("arrow-right")|safe }}</div>{% endif %}{% endmacro %}
+{% macro counter(s, color) %}{% if s.total > 1 %}<div class="counter" style="color:{{ color }}">{{ s.n }}/{{ s.total }}</div>{% endif %}{% endmacro %}
+{% macro paras(text) %}{% for p in text.strip().split("\n\n") %}<p>{{ p }}</p>{% endfor %}{% endmacro %}
+{% macro book(src, w, h, style="") %}
+  <div class="book {% if not src %}ph{% endif %}" style="width:{{ w }}px;height:{{ h }}px;{{ style }}">{% if src %}<img src="{{ src }}">{% else %}Мұқаба{% endif %}</div>
+{% endmacro %}
+
+{% for s in slides %}
+{% set d = s.data %}
+
+{# ═════ cover — обложка карусели, Бирюза ═════ #}
+{% if s.layout == "cover" %}
+<div class="f bg-birjuza" data-name="{{ s.file }}" data-bottom="200">
+  {{ ornament("#fff") }}
+  <div class="plate t-label" style="background:#fff;color:var(--birjuza)">{{ label }}</div>
+  <div class="flow" style="top:330px">
+    <div class="t-title">{{ d.title }}</div>
+    {% if d.subtitle %}<div class="t-body" style="margin-top:44px;color:rgba(255,255,255,.85)">{{ d.subtitle }}</div>{% endif %}
+  </div>
+  {{ lockup("#fff") }}{{ swipe(s, "#fff", "var(--birjuza)") }}
+</div>
+
+{# ═════ step — шаг урока, Қағаз ═════ #}
+{% elif s.layout == "step" %}
+<div class="f bg-qagaz" data-name="{{ s.file }}" data-bottom="170">
+  <div class="plate line t-label" style="color:var(--birjuza)">{{ label }}</div>
+  {{ counter(s, "var(--sur)") }}
+  <div class="flow" style="top:250px">
+    {% if d.number %}<div style="font:800 160px/1 Montserrat;color:var(--birjuza);opacity:.22">{{ d.number }}</div>{% endif %}
+    <div class="t-heading" style="color:var(--birjuza);margin-top:8px">{{ d.heading }}</div>
+    <div class="t-body" style="margin-top:32px">{{ paras(d.body) }}</div>
+    {% if d.example %}
+    <div style="margin-top:56px;background:#fff;border-left:8px solid var(--birjuza);border-radius:0 16px 16px 0;padding:36px 40px">
+      <div class="t-label" style="color:var(--sur);font-size:26px">{{ d.example_label or "Мысал" }}</div>
+      <div style="font:italic 400 38px/1.5 'Open Sans';margin-top:16px">{{ d.example }}</div>
+    </div>
+    {% endif %}
+  </div>
+  {{ mark_sm("var(--birjuza)") }}
+</div>
+
+{# ═════ text — заголовок и текст (вопрос интервью, вывод, любой внутренний слайд) ═════ #}
+{% elif s.layout == "text" %}
+<div class="f bg-qagaz" data-name="{{ s.file }}" data-bottom="170">
+  <div class="plate line t-label" style="color:var(--birjuza)">{{ label }}</div>
+  {{ counter(s, "var(--sur)") }}
+  <div class="flow" style="top:300px">
+    <div class="t-heading" style="color:var(--birjuza)">{{ d.heading }}</div>
+    <div class="t-body" style="margin-top:40px">{{ paras(d.body) }}</div>
+  </div>
+  {{ mark_sm("var(--birjuza)") }}
+</div>
+
+{# ═════ cta — финальный слайд любой карусели ═════ #}
+{% elif s.layout == "cta" %}
+<div class="f bg-birjuza" data-name="{{ s.file }}" data-bottom="200">
+  {{ ornament("#fff", "right:-200px;bottom:-160px") }}
+  <div class="flow" style="top:360px">
+    <div class="t-title" style="font-size:104px">Қазақша оқы. Қазақша жаз.</div>
+    <div class="t-body" style="margin-top:40px;color:rgba(255,255,255,.85)">{{ d.line or "Бір бөлімнен баста — жалғасы өзі келеді." }}</div>
+    <div class="pill" style="margin-top:64px;background:#fff;color:var(--birjuza)">{{ d.button or "qazaqnovel.kz" }}</div>
+  </div>
+  {{ lockup("#fff") }}
+</div>
+
+{# ═════ excerpt_cover — обложка «Үзінді» ═════ #}
+{% elif s.layout == "excerpt_cover" %}
+<div class="f bg-qagaz" data-name="{{ s.file }}" data-bottom="200">
+  <div class="plate t-label" style="background:var(--birjuza);color:#fff">{{ label }}</div>
+  {% if d.meta %}<div class="counter" style="color:var(--birjuza)">{{ d.meta }}</div>{% endif %}
+  <div class="flow" style="top:330px">
+    <div class="t-quote" style="font-size:64px">«{{ d.quote }}»</div>
+    <div class="rule" style="background:var(--birjuza);margin:60px 0 36px"></div>
+    <div style="font:700 44px/1.2 Montserrat">{{ d.work }}</div>
+    <div class="t-caption" style="color:var(--sur);font-weight:400;margin-top:12px">{{ d.author }}</div>
+  </div>
+  {{ lockup("var(--birjuza)") }}{{ swipe(s, "var(--birjuza)", "#fff") }}
+</div>
+
+{# ═════ excerpt_page — страница отрывка ═════ #}
+{% elif s.layout == "excerpt_page" %}
+<div class="f bg-qagaz" data-name="{{ s.file }}" data-bottom="170">
+  <div class="flow" style="top:96px;display:flex;justify-content:space-between;gap:40px;border-bottom:2px solid rgba(3,102,114,.3);padding-bottom:24px">
+    <span class="t-label" style="color:var(--birjuza)">{{ d.work }}</span>
+    {% if d.chapter %}<span class="t-label" style="color:var(--sur)">{{ d.chapter }}</span>{% endif %}
+  </div>
+  <div class="flow t-excerpt" style="top:230px">
+    {% for p in d.text.strip().split("\n\n") %}
+      <p style="margin-top:{{ 0 if loop.first else 20 }}px;{% if not p.startswith('—') %}text-indent:48px{% endif %}">{{ p }}</p>
+    {% endfor %}
+  </div>
+  <div style="position:absolute;left:0;right:0;bottom:96px;text-align:center;font:600 28px/1 'Open Sans';color:var(--sur)">{{ s.n }}/{{ s.total }}</div>
+</div>
+
+{# ═════ continue — «Жалғасы — сайтта», Терең ═════ #}
+{% elif s.layout == "continue" %}
+<div class="f bg-teren" data-name="{{ s.file }}" data-bottom="200">
+  <div class="flow" style="top:150px"><div class="t-heading" style="font-size:72px">{{ d.heading or "Жалғасы — сайтта" }}</div></div>
+  <div class="flow" style="top:380px;display:flex;gap:56px;align-items:center">
+    {{ book(d.cover, 340, 510, "flex:none") }}
+    <div>
+      {% if d.genre %}<div class="t-label" style="color:var(--ashyq)">{{ d.genre }}</div>{% endif %}
+      <div style="font:700 56px/1.15 Montserrat;margin-top:20px">{{ d.work }}</div>
+      <div class="t-caption" style="font-weight:400;color:rgba(255,255,255,.8);margin-top:16px">{{ d.author }}</div>
+    </div>
+  </div>
+  <div class="flow" style="top:1000px"><div class="pill" style="background:var(--ashyq);color:var(--teren)">{{ d.button or "Жалғасын оқы" }}</div></div>
+  {{ lockup("#fff") }}
+</div>
+
+{# ═════ book — «Аптаның кітабы», Терең ═════ #}
+{% elif s.layout == "book" %}
+<div class="f bg-teren" data-name="{{ s.file }}" data-bottom="190">
+  <div class="plate t-label" style="background:var(--ashyq);color:var(--teren)">{{ label }}</div>
+  {{ book(d.cover, 420, 630, "position:absolute;left:330px;top:220px") }}
+  <div class="flow" style="top:900px;text-align:center">
+    <div style="font:800 68px/1.1 Montserrat">{{ d.work }}</div>
+    <div class="t-caption" style="color:var(--ashyq);margin-top:16px;font-size:34px">{{ d.author }}</div>
+    {% if d.meta %}<div class="t-caption" style="color:rgba(255,255,255,.7);font-weight:400;margin-top:14px">{{ d.meta }}</div>{% endif %}
+  </div>
+  <div class="lockup" style="color:#fff;left:50%;transform:translateX(-50%)">{{ mark|safe }}Qazaqnovel.kz</div>
+</div>
+
+{# ═════ author_cover — «Автор» ═════ #}
+{% elif s.layout == "author_cover" %}
+<div class="f bg-qagaz" data-name="{{ s.file }}" data-bottom="200">
+  <div class="plate t-label" style="background:var(--birjuza);color:#fff">{{ label }}</div>
+  <div class="photo {% if not d.photo %}ph{% endif %}" style="position:absolute;left:var(--m);top:230px;width:440px;height:440px;border-radius:50%;overflow:hidden;border:10px solid #fff;box-shadow:0 0 0 4px var(--birjuza)">{% if d.photo %}<img src="{{ d.photo }}">{% else %}Фото{% endif %}</div>
+  <div class="flow" style="top:740px">
+    <div style="font:700 58px/1.2 Montserrat">«{{ d.quote }}»</div>
+    <div style="font:700 36px/1 Montserrat;color:var(--birjuza);margin-top:44px">{{ d.name }}</div>
+    {% if d.about %}<div class="t-caption" style="color:var(--sur);font-weight:400;margin-top:14px">{{ d.about }}</div>{% endif %}
+  </div>
+  {{ swipe(s, "var(--birjuza)", "#fff") }}
+</div>
+
+{# ═════ quote — «Дәйексөз», одиночный пост ═════ #}
+{% elif s.layout == "quote" %}
+{% set dark = d.variant == "teren" %}
+<div class="f {{ 'bg-teren' if dark else 'bg-birjuza' }}" data-name="{{ s.file }}" data-bottom="170">
+  {{ ornament("var(--ashyq)" if dark else "#fff") }}
+  <div class="plate line t-label" style="color:#fff">{{ label }}</div>
+  <div class="flow" style="top:330px">
+    <div class="t-quote">«{{ d.text }}»</div>
+    <div class="rule" style="background:{{ 'var(--ashyq)' if dark else 'var(--qagaz)' }};margin:56px 0 32px"></div>
+    <div style="font:700 38px/1.2 Montserrat;color:{{ 'var(--ashyq)' if dark else 'var(--qagaz)' }}">{{ d.author }}</div>
+    {% if d.source %}<div class="t-caption" style="color:rgba(255,255,255,.75);font-weight:400;margin-top:14px">{{ d.source }}</div>{% endif %}
+  </div>
+  {{ mark_sm("#fff") }}
+</div>
+
+{# ═════ feature — «Платформа жаңалығы» ═════ #}
+{% elif s.layout == "feature" %}
+<div class="f bg-qagaz" data-name="{{ s.file }}" data-bottom="760">
+  <div class="plate t-label" style="background:var(--birjuza);color:#fff">{{ label }}</div>
+  {{ counter(s, "var(--sur)") }}
+  <div class="flow" style="top:230px">
+    <div style="font:800 84px/1.05 Montserrat">{{ d.title }}</div>
+    {% if d.subtitle %}<div class="t-body" style="color:var(--sur);margin-top:28px">{{ d.subtitle }}</div>{% endif %}
+  </div>
+  <div style="position:absolute;left:310px;top:600px;width:460px;height:900px;border-radius:64px;background:var(--sia);padding:18px;box-shadow:0 40px 80px rgba(8,47,56,.25)">
+    <div class="screen {% if not d.screenshot %}ph{% endif %}" style="width:100%;height:100%;border-radius:48px;overflow:hidden">{% if d.screenshot %}<img src="{{ d.screenshot }}" style="object-position:top">{% else %}Скриншот{% endif %}</div>
+  </div>
+</div>
+
+{# ═════ contest — «Байқау», Лайм ═════ #}
+{% elif s.layout == "contest" %}
+<div class="f bg-laim" data-name="{{ s.file }}" data-bottom="200">
+  {{ ornament("var(--teren)", "opacity:.07") }}
+  <div class="plate t-label" style="background:var(--teren);color:var(--laim)">{{ label }}</div>
+  {{ counter(s, "var(--teren)") }}
+  <div class="flow" style="top:300px">
+    <div class="t-title" style="font-size:104px">{{ d.title }}</div>
+    {% if d.rows %}<div style="margin-top:56px;display:grid;gap:18px">
+      {% for r in d.rows %}<div class="t-body"><b style="font-weight:700">{{ r.label }}:</b> {{ r.value }}</div>{% endfor %}
+    </div>{% endif %}
+    {% if d.body %}<div class="t-body" style="margin-top:40px">{{ paras(d.body) }}</div>{% endif %}
+    {% if d.button %}<div class="pill" style="margin-top:64px;background:var(--qyzyl);color:#fff">{{ d.button }}</div>{% endif %}
+  </div>
+  {{ lockup("var(--teren)") }}
+</div>
+
+{# ═════ story_question — сторис с вопросом, место под стикер ═════ #}
+{% elif s.layout == "story_question" %}
+<div class="f story bg-birjuza" data-name="{{ s.file }}" data-bottom="1020">
+  {{ ornament("#fff", "bottom:-420px") }}
+  <div class="plate t-label" style="background:#fff;color:var(--birjuza)">{{ d.label or label }}</div>
+  <div class="flow" style="left:72px;right:72px;top:400px;background:#fff;color:var(--sia);border-radius:40px;padding:64px 56px">
+    <div style="font:800 72px/1.12 Montserrat">{{ d.question }}</div>
+  </div>
+</div>
+
+{# ═════ story_post — сторис «Жаңа пост», картинка поста по центру ═════ #}
+{% elif s.layout == "story_post" %}
+<div class="f story bg-teren" data-name="{{ s.file }}" data-bottom="380">
+  <div class="plate t-label" style="background:var(--ashyq);color:var(--teren)">{{ d.label or "Жаңа пост" }}</div>
+  <div class="{% if not d.image %}ph{% endif %}" style="position:absolute;left:150px;top:420px;width:780px;height:975px;border-radius:24px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.4)">{% if d.image %}<img src="{{ d.image }}" style="width:100%;height:100%;object-fit:cover">{% else %}Пост{% endif %}</div>
+  <div class="flow" style="top:1450px;text-align:center;font:700 44px/1.2 Montserrat">{{ d.line or "Толығырақ — лентада" }}</div>
+</div>
+
+{# ═════ reels_cover — обложка Reels ═════ #}
+{% elif s.layout == "reels_cover" %}
+<div class="f story bg-birjuza" data-name="{{ s.file }}" data-bottom="360">
+  {{ ornament("#fff", "bottom:-60px") }}
+  <div style="position:absolute;left:0;right:0;top:400px;text-align:center"><span class="t-label" style="display:inline-block;background:#fff;color:var(--birjuza);padding:16px 26px;border-radius:999px">{{ label }}</span></div>
+  <div class="flow" style="top:620px;text-align:center">
+    <div class="t-title" style="font-size:112px">{{ d.title }}</div>
+    {% if d.subtitle %}<div class="t-body" style="margin-top:40px;color:rgba(255,255,255,.85)">{{ d.subtitle }}</div>{% endif %}
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+</body>
+</html>

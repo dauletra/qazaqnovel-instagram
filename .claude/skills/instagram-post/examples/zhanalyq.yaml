@@ -1,0 +1,17 @@
+# Платформа жаңалығы — feature → text × 1–3 → cta. Скриншот — рядом с post.yaml.
+rubric: zhanalyq
+slides:
+  - layout: feature
+    title: Түнгі режим келді
+    subtitle: Кешке оқу енді көзге жеңіл
+    # screenshot: screen.png
+  - layout: text
+    heading: Қалай қосамын?
+    body: Сайттың төменгі жағындағы «Фон» жолынан таңда — ақ, түнгі немесе құрылғыңдағыдай.
+  - layout: cta
+    line: Жаңа мүмкіндікті сынап көр.
+caption: |-
+  Qazaqnovel.kz-те түнгі режим пайда болды. Кешке оқу енді көзге жеңіл.
+
+  Сайттың төменгі жағындағы «Фон» жолынан қос.
+hashtags: ["#qazaqnovel", "#жаңалық"]
