@@ -10,7 +10,7 @@
 
 | `rubric` | Плашка | Порядок слайдов | Пример |
 |---|---|---|---|
-| `zhazu-mektebi` | Жазу мектебі | `cover` → `step` × 3–6 → `cta` | `examples/zhazu-mektebi.yaml` |
+| `avtorlar-mektebi` | Авторлар мектебі | `cover` → `step` × 3–6 → `cta` | `examples/avtorlar-mektebi.yaml` |
 | `uzindi` | Үзінді | `excerpt_cover` → `excerpt_page` × 1–4 → `continue` | `examples/uzindi.yaml` |
 | `aptanyn-kitaby` | Аптаның кітабы | `book` (один слайд) | `examples/aptanyn-kitaby.yaml` |
 | `avtor` | Автор | `author_cover` → `text` × 3–5 → `cta` | `examples/avtor.yaml` |
@@ -50,13 +50,13 @@
 ## Поля поста
 
 ```yaml
-rubric: zhazu-mektebi
+rubric: avtorlar-mektebi
 date: 2026-10-13          # день публикации
 status: draft             # draft → ready → published
 slides: [...]
 caption: |-               # подпись под постом, см. voice.md
   ...
-hashtags: ["#qazaqnovel", "#қазақшажаз", "#жазумектебі"]
+hashtags: ["#qazaqnovel", "#қазақшажаз", "#авторлармектебі"]
 consent: "автор, 12.10, Telegram"   # для Үзінді / Автор / цитат авторов сайта
 ```
 

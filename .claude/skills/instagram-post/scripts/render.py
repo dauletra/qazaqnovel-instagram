@@ -22,7 +22,7 @@ from playwright.sync_api import sync_playwright
 SKILL = Path(__file__).resolve().parents[1]
 
 RUBRICS = {
-    "zhazu-mektebi": "Жазу мектебі",
+    "avtorlar-mektebi": "Авторлар мектебі",
     "uzindi": "Үзінді",
     "aptanyn-kitaby": "Аптаның кітабы",
     "avtor": "Автор",
