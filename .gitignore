@@ -2,3 +2,4 @@
 __pycache__/
 _sheet.png
 _render.html
+.claude/settings.local.json
