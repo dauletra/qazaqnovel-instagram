@@ -9,7 +9,7 @@
 Открой сессию Claude Code на этом репозитории и попроси, например:
 
 - «Сделай план на ноябрь»
-- «Сделай пост Жазу мектебі про клиффхэнгер»
+- «Сделай пост Авторлар мектебі про клиффхэнгер»
 - «Сделай Үзінді из этого отрывка» (+ текст, обложка, согласие автора)
 
 Claude пишет текст по-казахски, рисует слайды и кладёт всё в папку поста.
@@ -33,7 +33,7 @@ brand/                   аватар и обложки Highlights — загр�
 ## Рендер вручную
 
 ```bash
-bash .claude/skills/instagram-post/scripts/render.sh posts/2026-10/13-zhazu-alghashqy-abzac/post.yaml --sheet
+bash .claude/skills/instagram-post/scripts/render.sh posts/2026-11/16-avtorlar-mektebi-alghashqy-abzac/post.yaml --sheet
 ```
 
 Нужны Python 3.11+ и Chromium (Playwright ставит его сам при первом запуске).

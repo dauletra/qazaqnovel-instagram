@@ -1,5 +1,5 @@
-# Жазу мектебі — карусель: cover → step × 3–6 → cta.
-rubric: zhazu-mektebi
+# Авторлар мектебі — карусель: cover → step × 3–6 → cta.
+rubric: avtorlar-mektebi
 slides:
   - layout: cover
     title: Оқырманды алғашқы абзацтан ұста
@@ -26,4 +26,4 @@ caption: |-
   Қай тәсіл саған жақын? Пікірде жаз.
 
   Бірінші бөліміңді qazaqnovel.kz сайтында жарияла — тегін.
-hashtags: ["#qazaqnovel", "#қазақшажаз", "#жазумектебі"]
+hashtags: ["#qazaqnovel", "#қазақшажаз", "#авторлармектебі"]
